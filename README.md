@@ -1,10 +1,24 @@
-# Vibe Coding Template
+# Tutor
+
+# tutor-test
 
 <p align="center">
   <img src="docs/assets/vibe_tmpl_schema.png" alt="Vibe Coding Template architecture schema" width="100%">
 </p>
 
 A full-stack starter for web and mobile products: one repository with a Bun/Hono backend, a React CSR browser client (`webapp`), an Astro SSG/SSR site (`website`), an Expo mobile app, and shared API contracts. The goal is to give agents and developers clear architectural boundaries so new features keep following the same shape.
+
+## Project Setup Status
+
+- Project name and slug: `Tutor` / `tutor`.
+- Product scope: a universal technical foundation; product-specific journeys and business logic are intentionally deferred.
+- Active surfaces: backend/API, PostgreSQL persistence, public Astro `website`, authenticated React `webapp`, and Expo `mobile` for iOS and Android.
+- Baseline behavior: keep the template's email/password auth and demo premium/paywall flows unchanged for setup validation. Apple/Google sign-in, store billing configuration, Expo Push, EAS builds, and Maestro are not configured yet.
+- Uploads/media: expected later, but storage and product-specific file requirements are intentionally deferred. No cloud storage is configured.
+- Real-time features, admin tools, and external integrations: deferred.
+- Validation scope: local dependency installation, static checks, builds, automated tests, and smoke startup for the active surfaces where local prerequisites are available.
+- Release scope: local development only. Deployment, production domains, store releases, and Expo/EAS ownership are out of scope.
+- Repository destination: local checkout with no Git remote configured.
 
 ## Agent Intake Checklist Before Installing
 
@@ -97,7 +111,7 @@ This template ships two browser surfaces. Putting a feature in the wrong one is 
 - Build it in **`website`** (Astro, static by default, SSR/hybrid only when needed) when pages must be **public and found by search engines or shared with rich link previews**: marketing/landing pages, content sites, blogs, docs, and the public storefront of a **marketplace**. For a marketplace, this usually means the landing page, category/search landing pages, public listing/product pages, SEO metadata, and rich previews.
 - Build it in **`webapp`** (React, client-side rendered) when screens live **behind sign-in and do not need SEO**: login-adjacent app flows after redirect, buyer account, seller/admin panels, checkout/account workflows, dashboards, settings, and authenticated tools. No crawler needs these, so CSR is the simpler, cheaper choice.
 
-Rule of thumb for the agent: *if a page must rank in search or preview nicely when shared, it belongs in `website`; if it is only reachable after login, it belongs in `webapp`.* Real marketplaces normally use **both**: the public catalog lives in `website`, the authenticated app lives in `webapp`, and both reuse the same `@web-app-demo/contracts` schemas. Do not rebuild SEO pages inside `webapp` to "keep everything in one app"; that loses the SEO the product needs. Do not move the full authenticated app into Astro just because the product has public SEO pages.
+Rule of thumb for the agent: *if a page must rank in search or preview nicely when shared, it belongs in `website`; if it is only reachable after login, it belongs in `webapp`.* Real marketplaces normally use **both**: the public catalog lives in `website`, the authenticated app lives in `webapp`, and both reuse the same `@tutor/contracts` schemas. Do not rebuild SEO pages inside `webapp` to "keep everything in one app"; that loses the SEO the product needs. Do not move the full authenticated app into Astro just because the product has public SEO pages.
 
 Astro stays the default website stack for this template because it is content-first, static-first, ships little JavaScript by default, and gives agents a clear SEO surface. Choose Next.js only when the project intentionally wants a Vercel-optimized ISR/cache platform as a core product requirement. Treat TanStack Start as an optional future React full-stack path for teams that want one React app with selective SSR; it is not the simple default for non-programmer vibe-coding projects.
 
@@ -190,7 +204,7 @@ Android emulators usually need `http://10.0.2.2:3000` instead of `localhost`.
 
 Mobile Maestro E2E should use a LAN-reachable `EXPO_PUBLIC_API_URL`, a host-reachable `MAESTRO_DEV_SERVER_URL`, and `EXPO_PUBLIC_E2E=1` only for the E2E Metro session. See [docs/TESTING.md](docs/TESTING.md) before adding or running mobile flows.
 
-Test runners use the separate Docker Compose `postgres_test` service and the `TEST_DATABASE_URL` shape from `.env.example`/`backend/.env.example`. Webapp Playwright E2E starts `postgres_test`, applies migrations to `web_app_demo_test`, runs the browser flow, and tears down its test database volume by default.
+Test runners use the separate Docker Compose `postgres_test` service and the `TEST_DATABASE_URL` shape from `.env.example`/`backend/.env.example`. Webapp Playwright E2E starts `postgres_test`, applies migrations to `tutor_test`, runs the browser flow, and tears down its test database volume by default.
 
 ## Workspace Commands
 
